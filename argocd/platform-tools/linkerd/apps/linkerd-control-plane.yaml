@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: linkerd-control-plane
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: platform-tools
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: platform-tools
+  source:
+    repoURL: https://helm.linkerd.io/stable
+    chart: linkerd-control-plane
+    targetRevision: 1.*
+    helm:
+      releaseName: linkerd
+      valueFiles:
+        - argocd/platform-tools/linkerd/values/dev/values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: linkerd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,44 @@
+# === Linkerd Control Plane Helm values (environment-specific) ===
+installNamespace: false
+
+# Identity configuration (choose one method; keys vary by chart version)
+identity:
+  issuer:
+    # existingIssuerSecret: linkerd-issuer   # preferred (with cert-manager)
+    crtPEM: ""   # leave empty when using existing secret
+    keyPEM: ""   # leave empty when using existing secret
+  trustAnchorsPEM: ""
+
+proxy:
+  resources:
+    requests: { cpu: 50m, memory: 64Mi }
+    limits:   { cpu: 200m, memory: 256Mi }
+  logLevel: warn,linkerd=info
+
+destination:
+  resources:
+    requests: { cpu: 50m, memory: 128Mi }
+    limits:   { cpu: 500m, memory: 512Mi }
+
+identity:
+  resources:
+    requests: { cpu: 50m, memory: 64Mi }
+    limits:   { cpu: 200m, memory: 256Mi }
+
+proxyInjector:
+  resources:
+    requests: { cpu: 50m, memory: 128Mi }
+    limits:   { cpu: 500m, memory: 512Mi }
+
+controller:
+  resources:
+    requests: { cpu: 50m, memory: 128Mi }
+    limits:   { cpu: 500m, memory: 512Mi }
+
+highAvailability: false
+enableEndpointSlices: true
+
+# --- staging overrides ---
+highAvailability: true
+proxy:
+  logLevel: warn,linkerd=info
