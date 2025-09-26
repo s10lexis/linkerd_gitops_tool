@@ -26,31 +26,30 @@ spec:
           issuer:
             scheme: kubernetes.io/tls
             existingIssuerSecret: linkerd-issuer
-          trustAnchorsPEM: |
-            -----BEGIN CERTIFICATE-----
-            MIIDATCCAemgAwIBAgIRAIzGzVKi6CCERxf+H2IQA9AwDQYJKoZIhvcNAQELBQAw
-            GjEYMBYGA1UEAxMPbGlua2VyZC1yb290LWNhMB4XDTI1MDkyNjA1MDEzMVoXDTM1
-            MDkyNDA1MDEzMVowGjEYMBYGA1UEAxMPbGlua2VyZC1yb290LWNhMIIBIjANBgkq
-            hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4W7WLc+XUBTR/RZgLdRmlAZgSzE/MrFT
-            QpGb/AWTUTuuMsMpGkbOFKD6ihZzjuXarA26Br1m0UYOixwHrG71XUohljjYonnD
-            S+MiEehQLhk7Uy/MJxzpO2Z92DfYA1sTP16CARGfMCXIkKJli3rh3xWP7YhZSqyT
-            oid535Uo4cvxvcyrMoGceoY0PueWHpqeA+1iVYT5+2DH7DDj7dKaN8dkdqmI9/lM
-            pTcieJOHEDwQ9bu4BG97GVW2kKNUkGAJ/gSC9lcWuPir8z4GEgxpBwL8JZ2V+L5G
-            d3KVGmIiH3y0hrYZY6698RdEuKt2hq9gL2Mt0RB+Ye80NRNWV0wwSwIDAQABo0Iw
-            QDAOBgNVHQ8BAf8EBAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUBPIk
-            ERv+FOu00Yxg8kJgDTTthPgwDQYJKoZIhvcNAQELBQADggEBAKDuo971ZH9an73s
-            j1P+juZCFoPjvVhQvPA18I/SHlqB5uVLM/CHaNsys4Dq/JptoSjf3vaV78tfPJE0
-            8VoXAxZap2F8+pQ8UiVXrOeyqpr8lLaLXr2EsyMCWhJedcJXli/yl6AOo3Yg6ENM
-            TXYIMO8YmWbBAjLSXD4LZLgV4M2FQ34yvnUo5/KFnUog4XRSeSv+BA7qFZ3mjVGe
-            LwbtkcX1fChp3wmUIfqic1tQQBH4ZJVRyJpTmYmZ8EeVlimZVYgxlKSRqpWW+mlO
-            VfeyaofltJZ9EG/dHe1vwc1zE8oJL60jHK4Vhggqd/1S5NdYhYpMN26z1KVS+MfS
-            Pc7UjPg=
-            -----END CERTIFICATE-----
-          resources:
-            requests: { cpu: 50m, memory: 64Mi }
-            limits:   { cpu: 200m, memory: 256Mi }
 
-        # --- Component resource defaults ---
+        # Top-level trust anchor required by chart
+        identityTrustAnchorsPEM: |
+          -----BEGIN CERTIFICATE-----
+          MIIDATCCAemgAwIBAgIRAIzGzVKi6CCERxf+H2IQA9AwDQYJKoZIhvcNAQELBQAw
+          GjEYMBYGA1UEAxMPbGlua2VyZC1yb290LWNhMB4XDTI1MDkyNjA1MDEzMVoXDTM1
+          MDkyNDA1MDEzMVowGjEYMBYGA1UEAxMPbGlua2VyZC1yb290LWNhMIIBIjANBgkq
+          hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4W7WLc+XUBTR/RZgLdRmlAZgSzE/MrFT
+          QpGb/AWTUTuuMsMpGkbOFKD6ihZzjuXarA26Br1m0UYOixwHrG71XUohljjYonnD
+          S+MiEehQLhk7Uy/MJxzpO2Z92DfYA1sTP16CARGfMCXIkKJli3rh3xWP7YhZSqyT
+          oid535Uo4cvxvcyrMoGceoY0PueWHpqeA+1iVYT5+2DH7DDj7dKaN8dkdqmI9/lM
+          pTcieJOHEDwQ9bu4BG97GVW2kKNUkGAJ/gSC9lcWuPir8z4GEgxpBwL8JZ2V+L5G
+          d3KVGmIiH3y0hrYZY6698RdEuKt2hq9gL2Mt0RB+Ye80NRNWV0wwSwIDAQABo0Iw
+          QDAOBgNVHQ8BAf8EBAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUBPIk
+          ERv+FOu00Yxg8kJgDTTthPgwDQYJKoZIhvcNAQELBQADggEBAKDuo971ZH9an73s
+          j1P+juZCFoPjvVhQvPA18I/SHlqB5uVLM/CHaNsys4Dq/JptoSjf3vaV78tfPJE0
+          8VoXAxZap2F8+pQ8UiVXrOeyqpr8lLaLXr2EsyMCWhJedcJXli/yl6AOo3Yg6ENM
+          TXYIMO8YmWbBAjLSXD4LZLgV4M2FQ34yvnUo5/KFnUog4XRSeSv+BA7qFZ3mjVGe
+          LwbtkcX1fChp3wmUIfqic1tQQBH4ZJVRyJpTmYmZ8EeVlimZVYgxlKSRqpWW+mlO
+          VfeyaofltJZ9EG/dHe1vwc1zE8oJL60jHK4Vhggqd/1S5NdYhYpMN26z1KVS+MfS
+          Pc7UjPg=
+          -----END CERTIFICATE-----
+
+        # --- Component resource defaults (dev-friendly) ---
         proxy:
           resources:
             requests: { cpu: 50m,  memory: 64Mi }
