@@ -19,17 +19,13 @@ spec:
     helm:
       releaseName: linkerd
       values: |
-        # --- REQUIRED: leave installNamespace false (Argo CD creates ns) ---
         installNamespace: false
 
         # --- Identity (mTLS) ---
         identity:
           issuer:
-            # Secret created by the deploy script / cert-manager
             existingIssuerSecret: linkerd-issuer
-          # Paste your root CA (trust anchor) below between the | block
           trustAnchorsPEM: |
-
             -----BEGIN CERTIFICATE-----
             MIIDATCCAemgAwIBAgIRAIzGzVKi6CCERxf+H2IQA9AwDQYJKoZIhvcNAQELBQAw
             GjEYMBYGA1UEAxMPbGlua2VyZC1yb290LWNhMB4XDTI1MDkyNjA1MDEzMVoXDTM1
@@ -49,8 +45,11 @@ spec:
             VfeyaofltJZ9EG/dHe1vwc1zE8oJL60jHK4Vhggqd/1S5NdYhYpMN26z1KVS+MfS
             Pc7UjPg=
             -----END CERTIFICATE-----
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits:   { cpu: 200m, memory: 256Mi }
 
-        # --- Sensible defaults (dev) ---
+        # --- Component resource defaults ---
         proxy:
           resources:
             requests: { cpu: 50m,  memory: 64Mi }
@@ -62,11 +61,6 @@ spec:
             requests: { cpu: 50m,  memory: 128Mi }
             limits:   { cpu: 500m, memory: 512Mi }
 
-        identity:
-          resources:
-            requests: { cpu: 50m,  memory: 64Mi }
-            limits:   { cpu: 200m, memory: 256Mi }
-
         proxyInjector:
           resources:
             requests: { cpu: 50m,  memory: 128Mi }
@@ -77,11 +71,8 @@ spec:
             requests: { cpu: 50m,  memory: 128Mi }
             limits:   { cpu: 500m, memory: 512Mi }
 
-        # Toggle to true for staging/prod HA
         highAvailability: false
-
         enableEndpointSlices: true
-
   syncPolicy:
     automated:
       prune: true
