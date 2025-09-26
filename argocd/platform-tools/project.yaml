@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: platform-tools
+  namespace: argocd
+spec:
+  description: Project for platform tooling (Linkerd, etc.)
+  sourceRepos:
+    - 'https://helm.linkerd.io/stable'
+    - 'https://github.com/s10lexis/linkerd_gitops_tool'   # your Git repo
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: linkerd
+  # Start broad for cluster-scoped objects Linkerd needs; you can tighten later
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  orphanedResources:
+    warn: false
+
