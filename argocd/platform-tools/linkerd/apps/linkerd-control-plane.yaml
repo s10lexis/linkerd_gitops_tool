@@ -24,6 +24,7 @@ spec:
         # --- Identity (mTLS) ---
         identity:
           issuer:
+            scheme: kubernetes.io/tls
             existingIssuerSecret: linkerd-issuer
           trustAnchorsPEM: |
             -----BEGIN CERTIFICATE-----
